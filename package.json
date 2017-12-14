@@ -17,7 +17,7 @@
     "api"
   ],
   "bin": {
-    "webgen": "node index.js"
+    "webgen": "index.js"
   },
   "files": [
     "LICENSE",
