@@ -1,0 +1,46 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "webapp-gen",
+        "scope": null,
+        "escapedName": "webapp-gen",
+        "name": "webapp-gen",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      ""
+    ]
+  ],
+  "_inCache": true,
+  "_installable": true,
+  "name": "webapp-gen",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [
+    "express",
+    "framework",
+    "web",
+    "light",
+    "router",
+    "app",
+    "api"
+  ],
+  "bin": {
+    "webgen": "index.js"
+  },
+  "files": [
+    "LICENSE",
+    "lib/"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^2.12.2"
+  }
+}
