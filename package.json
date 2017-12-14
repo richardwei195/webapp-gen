@@ -1,34 +1,23 @@
 {
-  "_args": [
-    [
-      {
-        "raw": "webapp-gen",
-        "scope": null,
-        "escapedName": "webapp-gen",
-        "name": "webapp-gen",
-        "rawSpec": "",
-        "spec": "latest",
-        "type": "tag"
-      },
-      ""
-    ]
-  ],
-  "_inCache": true,
-  "_installable": true,
-  "name": "webapp-gen",
-  "version": "1.0.0",
-  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com:richardwei195/webapp-gen.git"
+  },
+  "name": "webserver-gen",
+  "version": "0.0.1",
+  "description": "a lightly and fastly cli for generator a webApp server(Node.js)",
   "keywords": [
     "express",
     "framework",
     "web",
+    "server",
     "light",
     "router",
     "app",
     "api"
   ],
   "bin": {
-    "webgen": "index.js"
+    "webgen": "node index.js"
   },
   "files": [
     "LICENSE",
@@ -38,7 +27,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "ricardweii<weizainiunai@163.com>",
   "license": "ISC",
   "dependencies": {
     "commander": "^2.12.2"
