@@ -33,5 +33,11 @@
     "co": "^4.6.0",
     "commander": "^2.12.2",
     "mkdirp": "^0.5.1"
+  },
+  "devDependencies": {
+    "standard": "*"
+  },
+  "engines": {
+    "node": ">=6"
   }
 }

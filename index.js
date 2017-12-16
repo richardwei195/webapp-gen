@@ -40,41 +40,87 @@ before(program, 'unknownOption', function () {
 class Generator {
   constructor () {
     this._appName = 'hello-world'
-    this._genType = 'javascript'
+    this._genType = 'express'
+    this.destinationPath = '.'
   }
+
   set genType (type) {
     this._genType = type
   }
 
-  build () {
-    var destinationPath = program.args.shift() || '.'
+  * build () {
+    // people who was in
+    this.destinationPath = program.args.shift() || '.'
     // App name
-    let appName = this.createAppName(path.resolve(__dirname)) || this._appName
-    mkdirp(destinationPath + '/src', function (err) {
-      fs.copyFileSync(path.join(__dirname, 'lib/js', 'app.js'), path.join(destinationPath + '/src/app.js'))
-    })
+    this._appName = createAppName(path.resolve(__dirname, this.destinationPath)) || this._appName
+
+    yield this.createFile()    
   }
 
-  createAppName(pathName) {
-    return path.basename(pathName)
-      .replace(/[^A-Za-z0-9.()!~*'-]+/g, '-')
-      .replace(/^[-_.]+|-+$/g, '')
-      .toLowerCase()
+  * createFile() {
+    const baseUrl = __dirname + '/lib/express'
+    switch (this._genType) {
+      case 'express':
+        // make express config
+        const _path = yield done => mkdirp(this.destinationPath + '/config', done)
+
+        // make app.js
+        fs.copyFileSync(path.join(baseUrl, 'app.js'), path.join(_path + '/app.js'))
+        // make config
+        fs.copyFileSync(path.join(baseUrl, '/config/default.json5'), path.join(_path + '/config/default.json5'))
+
+        // make package.js
+        let pkg = {
+          name: this._appName,
+          version: '0.0.0',
+          private: true,
+          scripts: {
+            start: 'node app.js'
+          },
+          dependencies: {
+            'body-parser': '~1.17.1',
+            'cookie-parser': '~1.4.3',
+            "cookie-session": "^1.2.0",
+            'debug': '~2.6.3',
+            'express': '~4.16.0',
+            'morgan': '~1.8.1',
+            'serve-favicon': '~2.4.2',
+            "cors": "^2.8.4",
+            "require-dir": "^0.3.2",
+            "config": "^1.28.1"
+          },
+          devDependencies: {
+            "yarn": "^1.3.2"
+          }
+        }
+        fs.writeFileSync(_path + '/package.json', JSON.stringify(pkg, null, 2))
+
+        break;
+
+      default:
+        break;
+    }
   }
 }
 
 const gen = new Generator()
 
 program
-  .version('0.1.0')
+  .version(version, '-v, --version')
   .usage('[options] [dir]')
-  .option('-j, --javascript', gen.genType = 'javascript')
+  .option('-e, --express', gen.genType = 'express')
   .parse(process.argv)
 
 if (!exit.exited) {
-  gen.build()
+  co(gen.build())
 }
 
+function createAppName(pathName) {
+  return path.basename(pathName)
+    .replace(/[^A-Za-z0-9.()!~*'-]+/g, '-')
+    .replace(/^[-_.]+|-+$/g, '')
+    .toLowerCase()
+}
 
 /**
  * Install an around function; AOP.
