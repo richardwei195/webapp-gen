@@ -30,6 +30,8 @@
   "author": "ricardweii<weizainiunai@163.com>",
   "license": "ISC",
   "dependencies": {
-    "commander": "^2.12.2"
+    "co": "^4.6.0",
+    "commander": "^2.12.2",
+    "mkdirp": "^0.5.1"
   }
 }

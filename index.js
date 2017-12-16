@@ -4,6 +4,8 @@ const program = require('commander')
 const fs = require('fs')
 const path = require('path')
 const readline = require('readline')
+const mkdirp = require('mkdirp')
+const co = require('co')
 const pkg = require('./package.json')
 
 var _exit = process.exit;
@@ -45,11 +47,12 @@ class Generator {
   }
 
   build () {
-    // Path
-    let destinationPath = program.args.shift() || '.'
-
+    var destinationPath = program.args.shift() || '.'
     // App name
-    let appName = this.createAppName(path.resolve(destinationPath)) || this._appName
+    let appName = this.createAppName(path.resolve(__dirname)) || this._appName
+    mkdirp(destinationPath + '/src', function (err) {
+      fs.copyFileSync(path.join(__dirname, 'lib/js', 'app.js'), path.join(destinationPath + '/src/app.js'))
+    })
   }
 
   createAppName(pathName) {
@@ -57,18 +60,6 @@ class Generator {
       .replace(/[^A-Za-z0-9.()!~*'-]+/g, '-')
       .replace(/^[-_.]+|-+$/g, '')
       .toLowerCase()
-  }
-
-  confirm(msg, callback) {
-    var rl = readline.createInterface({
-      input: process.stdin,
-      output: process.stdout
-    })
-
-    rl.question(msg, function (input) {
-      rl.close()
-      callback(/^y|yes|ok|true$/i.test(input))
-    })
   }
 }
 
