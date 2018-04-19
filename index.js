@@ -59,11 +59,11 @@ class Generator {
         // make app.js
         fs.copyFileSync(path.join(baseUrl, 'app.js'), path.join(this.destinationPath + '/app.js'))
         // make config
-        fs.copyFileSync(path.join(baseUrl, '/config/default.json5'), this.destinationPath + '/config/default.json5')
+        fs.copyFileSync(path.join(baseUrl, '/config/default.json5'), path.join(this.destinationPath + '/config/default.json5'))
         // make route
         fs.copyFileSync(path.join(baseUrl, 'route.js'), path.join(this.destinationPath + '/route.js'))
         // make .gitignore
-        fs.copyFileSync(path.join(baseUrl, '/.gitignore'), path.join(this.destinationPath + '/.gitignore'))
+        fs.copyFileSync(path.join(baseUrl, '.gitignore'), path.join(this.destinationPath + '/.gitignore'))
 
         // make package.js
         let pkg = {
