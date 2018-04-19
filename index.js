@@ -10,8 +10,6 @@ const pkg = require('./package.json')
 var _exit = process.exit
 var version = pkg.version
 
-// Re-assign process.exit because of commander
-// TODO: Switch to a different command framework
 process.exit = exit
 
 // CLI
@@ -23,14 +21,11 @@ around(program, 'optionMissingArgument', function (fn, args) {
 })
 
 before(program, 'outputHelp', function () {
-  // track if help was shown for unknown option
   this._helpShown = true
 })
 
 before(program, 'unknownOption', function () {
-  // allow unknown options if help was shown, to prevent trailing error
   this._allowUnknownOption = this._helpShown
-  // show help if not yet shown
   if (!this._helpShown) {
     program.outputHelp()
   }
@@ -48,9 +43,7 @@ class Generator {
   }
 
   * build () {
-    // people who was in
     this.destinationPath = program.args.shift() || '.'
-    // App name
     this._appName = createAppName(path.resolve(__dirname, this.destinationPath)) || this._appName
 
     yield this.createFile()
@@ -69,14 +62,18 @@ class Generator {
         fs.copyFileSync(path.join(baseUrl, '/config/default.json5'), path.join(_path + '/config/default.json5'))
         // make route
         fs.copyFileSync(path.join(baseUrl, 'route.js'), path.join(_path + '/route.js'))
-
+        // make .gitignore
+        fs.copyFileSync(path.join(baseUrl, '.gitignore'), path.join(_path + '/.gitignore'))
+        // make test
+        fs.mkdirSync(this.destinationPath, '/test')
         // make package.js
         let pkg = {
           name: this._appName,
           version: '0.0.0',
           private: true,
           scripts: {
-            start: 'node app.js'
+            start: 'node app.js',
+            dev: 'NODE_ENV=dev nodemon app.js'
           },
           dependencies: {
             'body-parser': '~1.17.1',
@@ -91,7 +88,8 @@ class Generator {
             'config': '^1.28.1'
           },
           devDependencies: {
-            'yarn': '^1.3.2'
+            'yarn': '^1.3.2',
+            'nodemon': '~1.17.3'
           }
         }
         fs.writeFileSync(_path + '/package.json', JSON.stringify(pkg, null, 2))
@@ -121,10 +119,6 @@ function createAppName (pathName) {
     .toLowerCase()
 }
 
-/**
- * Install an around function; AOP.
- */
-
 function around (obj, method, fn) {
   var old = obj[method]
 
@@ -135,10 +129,6 @@ function around (obj, method, fn) {
   }
 }
 
-/**
- * Install a before function; AOP.
- */
-
 function before (obj, method, fn) {
   var old = obj[method]
 
@@ -148,14 +138,7 @@ function before (obj, method, fn) {
   }
 }
 
-/**
- * Graceful exit for async STDIO
- */
-
 function exit (code) {
-  // flush output for Node.js Windows pipe bug
-  // https://github.com/joyent/node/issues/6247 is just one bug example
-  // https://github.com/visionmedia/mocha/issues/333 has a good discussion
   function done () {
     if (!(draining--)) _exit(code)
   }
@@ -166,7 +149,6 @@ function exit (code) {
   exit.exited = true
 
   streams.forEach(function (stream) {
-    // submit empty write request and wait for completion
     draining += 1
     stream.write('', done)
   })
