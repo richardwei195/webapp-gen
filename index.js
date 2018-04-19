@@ -63,7 +63,7 @@ class Generator {
         // make route
         fs.copyFileSync(path.join(baseUrl, 'route.js'), path.join(_path + '/route.js'))
         // make .gitignore
-        fs.copyFileSync(path.join(baseUrl, '.gitignore'), path.join(_path + '/.gitignore'))
+        fs.copyFileSync(path.join(baseUrl, '/.gitignore'), path.join(_path + '/.gitignore'))
         // make test
         fs.mkdirSync(this.destinationPath, '/test')
         // make package.js
