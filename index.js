@@ -63,39 +63,42 @@ class Generator {
         // make route
         fs.copyFileSync(path.join(baseUrl, 'route.js'), path.join(_path + '/route.js'))
         // make .gitignore
-        fs.copyFileSync(path.join(baseUrl, '.gitignore'), path.join(_path + '/.gitignore'))
-
-        // make package.js
-        let pkg = {
-          name: this._appName,
-          version: '0.0.0',
-          private: true,
-          scripts: {
-            start: 'node app.js',
-            dev: 'NODE_ENV=dev nodemon app.js'
-          },
-          dependencies: {
-            'body-parser': '~1.17.1',
-            'cookie-parser': '~1.4.3',
-            'cookie-session': '^1.2.0',
-            'debug': '~2.6.3',
-            'express': '~4.16.0',
-            'morgan': '~1.8.1',
-            'serve-favicon': '~2.4.2',
-            'cors': '^2.8.4',
-            'require-dir': '^0.3.2',
-            'config': '^1.28.1'
-          },
-          devDependencies: {
-            'yarn': '^1.3.2',
-            'nodemon': '~1.17.3'
-          }
-        }
-        fs.writeFileSync(_path + '/package.json', JSON.stringify(pkg, null, 2))
+        fs.copyFileSync(path.join(baseUrl, 'gitignore-temp'), path.join(_path + '/.gitignore'))
+        // make package.json
+        this.genPackagejson()
         break
       default:
         break
     }
+  }
+
+  genPackagejson () {
+    let pkg = {
+      name: this._appName,
+      version: '0.0.0',
+      private: true,
+      scripts: {
+        start: 'node app.js',
+        dev: 'NODE_ENV=dev nodemon app.js'
+      },
+      dependencies: {
+        'body-parser': '~1.17.1',
+        'cookie-parser': '~1.4.3',
+        'cookie-session': '^1.2.0',
+        'debug': '~2.6.3',
+        'express': '~4.16.0',
+        'morgan': '~1.8.1',
+        'serve-favicon': '~2.4.2',
+        'cors': '^2.8.4',
+        'require-dir': '^0.3.2',
+        'config': '^1.28.1'
+      },
+      devDependencies: {
+        'yarn': '^1.3.2',
+        'nodemon': '~1.17.3'
+      }
+    }
+    fs.writeFileSync(this.destinationPath + '/package.json', JSON.stringify(pkg, null, 2))
   }
 }
 
