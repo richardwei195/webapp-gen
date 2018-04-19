@@ -38,9 +38,9 @@ webgen -h
 ## CHANGELOG
 
 ### 2018.04.19
-- support .gitignore
-- support nodemon
-- update README.md
+- support `.gitignore`
+- support `nodemon`
+- update `README.md`
 
 ### 2017.11.29
 - init
