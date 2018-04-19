@@ -50,26 +50,35 @@ class Generator {
   }
 
   * createFile () {
-    const baseUrl = path.join(__dirname, '/lib/express')
+    this.baseUrl = path.join(__dirname, '/lib/express')
     switch (this._genType) {
       case 'express':
         // make express config
         const _path = yield done => mkdirp(this.destinationPath + '/config', done)
-
+        // make api
+        this.genAPIs()
         // make app.js
-        fs.copyFileSync(path.join(baseUrl, 'app.js'), path.join(_path + '/app.js'))
+        fs.copyFileSync(path.join(this.baseUrl, 'app.js'), path.join(_path + '/app.js'))
         // make config
-        fs.copyFileSync(path.join(baseUrl, '/config/default.json5'), path.join(_path + '/config/default.json5'))
+        fs.copyFileSync(path.join(this.baseUrl, '/config/default.json5'), path.join(_path + '/config/default.json5'))
         // make route
-        fs.copyFileSync(path.join(baseUrl, 'route.js'), path.join(_path + '/route.js'))
+        fs.copyFileSync(path.join(this.baseUrl, 'route.js'), path.join(_path + '/route.js'))
         // make .gitignore
-        fs.copyFileSync(path.join(baseUrl, 'gitignore-temp'), path.join(_path + '/.gitignore'))
+        fs.copyFileSync(path.join(this.baseUrl, 'gitignore-temp'), path.join(_path + '/.gitignore'))
         // make package.json
         this.genPackagejson()
         break
       default:
         break
     }
+  }
+
+  /**
+   * @desc generator apis
+   */
+  genAPIs () {
+    fs.mkdirSync(this.destinationPath + '/api')
+    fs.copyFileSync(path.join(this.baseUrl, '/api/home.js'), path.join(this.destinationPath + '/api/home.js'))
   }
 
   genPackagejson () {
