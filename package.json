@@ -4,7 +4,7 @@
     "url": "git+ssh://git@github.com:richardwei195/webapp-gen.git"
   },
   "name": "webserver-gen",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "a lightly and fastly cli for generator a webApp server(Node.js)",
   "keywords": [
     "express",
