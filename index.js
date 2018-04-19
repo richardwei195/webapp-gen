@@ -57,15 +57,14 @@ class Generator {
         const _path = yield done => mkdirp(this.destinationPath + '/config', done)
 
         // make app.js
-        fs.copyFileSync(path.join(baseUrl, 'app.js'), path.join(_path + '/app.js'))
+        fs.copyFileSync(path.join(baseUrl, 'app.js'), path.join(this.destinationPath + '/app.js'))
         // make config
-        fs.copyFileSync(path.join(baseUrl, '/config/default.json5'), path.join(_path + '/config/default.json5'))
+        fs.copyFileSync(path.join(baseUrl, '/config/default.json5'), this.destinationPath.join(_path + '/config/default.json5'))
         // make route
-        fs.copyFileSync(path.join(baseUrl, 'route.js'), path.join(_path + '/route.js'))
+        fs.copyFileSync(path.join(baseUrl, 'route.js'), path.join(this.destinationPath + '/route.js'))
         // make .gitignore
-        fs.copyFileSync(path.join(baseUrl, '/.gitignore'), path.join(_path + '/.gitignore'))
-        // make test
-        fs.mkdirSync(this.destinationPath, '/test')
+        fs.copyFileSync(path.join(baseUrl, '/.gitignore'), path.join(this.destinationPath + '/.gitignore'))
+
         // make package.js
         let pkg = {
           name: this._appName,
