@@ -101,7 +101,8 @@ class Generator {
         'cors': '^2.8.4',
         'require-dir': '^0.3.2',
         'config': '^1.28.1',
-        'log4js': '^2.5.3'
+        'log4js': '^2.5.3',
+        'mongoose': '^5.0.15'
       },
       devDependencies: {
         'yarn': '^1.3.2',

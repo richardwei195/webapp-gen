@@ -20,5 +20,13 @@
         "level": "info"
       }
     }
+  },
+  "sessionConfig": {
+    "name": "APP_SESSIONID",
+    "keys": ["ID"]
+  }
+  "mongodb": {
+    "db_url": "mongodb://127.0.0.1:27017/app",
+    "auth_db": "admin"
   }
 }

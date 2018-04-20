@@ -49,6 +49,9 @@ webgen -h
 
 ## CHANGELOG
 
+### 0.1.1 / 2018-04-20
+- add log4js
+
 ### 0.1.0 / 2018-04-19
 - fix app.js
 - perf generator package.json function
