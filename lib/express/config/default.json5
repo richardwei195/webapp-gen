@@ -1,3 +1,24 @@
 {
-  "port": 3000
+  "port": 3000,
+  "logger": {
+    "appenders": {
+      "console": {
+        "type": "console" 
+      },
+      "file": {
+        "type": "file", 
+        "filename": "logs/app.log"
+        }
+      },
+    "categories": {
+      "default": {
+        "appenders": ["console"], 
+        "level": "info"
+      },
+      "app": {
+        "appenders": ["file", "console"], 
+        "level": "info"
+      }
+    }
+  }
 }

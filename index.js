@@ -100,7 +100,8 @@ class Generator {
         'serve-favicon': '~2.4.2',
         'cors': '^2.8.4',
         'require-dir': '^0.3.2',
-        'config': '^1.28.1'
+        'config': '^1.28.1',
+        'log4js': '^2.5.3'
       },
       devDependencies: {
         'yarn': '^1.3.2',
